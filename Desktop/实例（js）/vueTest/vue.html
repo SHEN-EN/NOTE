@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/vue.css"/>
+		<style type="text/css">
+			.slide-fade-enter-active {
+			  transition: all .3s ease;
+			}
+			.slide-fade-leave-active {
+			  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+			}
+			.slide-fade-enter, .slide-fade-leave-to
+			/* .slide-fade-leave-active for below version 2.1.8 */ {
+			  transform: translateX(10px);
+			  opacity: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box" :class="{box:isbox}">  <!--	v-bind:class='{}' 属性绑定	-->
+			{{message}}
+			<ul id="do_list">
+				<li>09点07分</li>
+				<li>09点07分</li>
+				<li>09点07分</li>
+				<li>09点07分</li>
+			</ul>
+			<ul v-for="items in item"> <!-- 	v-for : 循环列表		-->
+				<li v-text="items.lable"></li> <!--	v-text:渲染data数据	 -->
+			</ul>
+			<input type="text" v-model="message"/> <!--	v-model:双向绑定		-->
+			<button @click="get" style="width: 20px;height: 20px;">按钮</button>
+		</div>
+		<div id="btn">
+			{{msg}}
+			<app title='my Vue'></app>
+			<app @click='event'></app>
+			<app></app>
+			<div id="none"  :style="{fontSize:sinaSize+'em'}">	
+			<sina v-for='sina in sinaTitle' v-bind:id='sina.id' v-bind:post='sina' v-on:enlarge-text="sinaSize+=1" ></sina>	<!-- 	调用新建组件		-->
+			<!-- <input v-model="sinaSize">-->
+			</div>
+			<local>123</local>
+			<input v-model="msg" />
+		<alertbox v-bind:mesg='msg'>
+		</alertbox>
+		</div>
+		<div id="event">
+			<p>{{count}}</p>
+			<btn v-on:vue='counts'></btn><!--监听是否响应-->
+			<btn v-on:vue='counts'></btn>
+		<button @click="show=!show">按钮</button>
+		<transition name='slide-fade' mode='in-out'>
+			<button v-show="show"> 按钮</button>
+			<p v-bind:style="styleObj" v-show="show">Vue 动画</p>
+		</transition>
+		<input type="text"  v-focus />
+		</div>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			new Vue({
+				el:'#box',
+				data:{
+					message:'Hello Vue',
+					isbox:true,
+					item:[
+							{
+								lable:'apple'
+							},
+							{
+								lable:'yellow'
+							}
+					]
+				},
+				methods:{
+					get:function(){
+						console.log(this)
+					}
+				}
+			})
+			Vue.component('sina',{
+				props:['post'],//向子组件传参
+				template:'<div id="gg">'+
+				'<h3>{{post.title}}</h3>'+		
+				'<div v-text="post.time"></div>'+
+				'<button v-on:click="$emit(enlarge-text)">Enlarge text</button>'+
+				'<div v-html="post.contran"></div>'+
+				'</div>'
+			})
+			/**********局部组件***************/
+			var localChildren={
+				template:"<button @click='callback'>am</button>",
+				data:function(){
+					return{
+						sinaSize:1
+					}
+				},
+				methods:{
+					callback:function () {
+						this.sinaSize++;
+						//console.log(this.sinaSize);
+					}
+				}
+			}
+			//注册组件
+			Vue.component('app',{
+				template:'<button @click="count++" @click="parent">{{count}}</button>',
+				data:function(){
+					return{
+						count:0						
+					}
+				},
+				components:{
+					'apps':localChildren
+				},
+				methods:{
+					parent:function(){
+						console.log(this.$parent.count)//返回父组件的data
+					}
+				}
+			})
+			new Vue({
+				el:'#btn',
+				components:{
+					"local":localChildren
+				},
+				data:{
+					sinaSize:1,
+					sinaTitle:[
+						{id:1,title:'My vue',contran:'sians',time:'14点26分'},
+						{id:2,title:'i like vue',contran:'sinaYEP',time:'14点26分'},
+						{id:3,title:'vue is life',contran:'sinaNo',time:'14点26分'}
+					],
+					msg:'Hei boy!'
+				},
+				methods:{
+					event:function(){
+						alert(this.msg);
+					}
+				}
+		})
+			/******动态props***********/
+		Vue.component('alertbox',{
+			props:['mesg'],
+			template:'<p>{{mesg}}</p>'
+		})
+		var countButton={
+			data:function(){
+				return{
+					totles:0					
+				}
+			},
+			template:'<button @click="jisuan">{{totles}}</button>',
+			methods:{
+				jisuan:function(){
+					//console.log(this.totles)
+					this.$emit('vue')//向父级元素<btn>传递信息。
+					this.totles++
+					console.log(this.$root.count)//$root：查找根实例的值
+				}
+			}
+		}
+	/**********自定义事件***********/
+/*		Vue.directive('focus',{
+			inserted:function(el){
+				el.focus()				//全局自定义指令
+			}
+		})*/
+		new Vue({
+			el:'#event',
+			data:{
+				count:0,
+				show:true,
+				styleObj:{
+					fontsize:'30px',
+					color:'red'
+				}
+			},
+			components:{
+				'btn':countButton,
+			},
+			methods:{
+				counts:function(){
+					this.count++
+					console.log(this.$parent)
+				}
+			},
+			directives:{
+				focus:{
+					inserted:function(el){//局部自定义指令
+						el.focus()
+					}
+				}
+			}
+		})
+		</script>	
+ 	</body>
+</html>

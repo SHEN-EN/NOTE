@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>飞机发射子弹</title>
+		<style type="text/css">
+			#imgs{
+				position: absolute;
+				left: 500px;
+				top:50px;
+			}
+			ul{
+				list-style: none;
+			}
+			ul li{
+				width: 10px;
+				height:10px;
+				background:yellowgreen;
+				border-radius: 100%;
+				position: absolute;
+				left: 0px;
+				top:0px;
+				/*display:none;*/
+			}
+		</style>
+	</head>
+	<body>
+		<img src="images/0.png" width="100px" id="imgs"/>
+		<ul id="oul">
+			
+		</ul>
+		<script src="script.js"></script>
+	</body>
+</html>
+
+		<script>
+		var imgs = document.getElementById("imgs"),
+	oul = document.getElementById("oul");
+	
+document.onkeydown = function(e){
+	var e = window.event || e;
+	switch(e.keyCode){
+		case 37: //左
+			imgs.style.left = imgs.offsetLeft - 10+"px";
+		break;
+		case 38: //上
+			imgs.style.top = imgs.offsetTop - 10+"px";
+		break;
+		case 39: //右
+			imgs.style.left = imgs.offsetLeft + 10+"px";
+		break;
+		case 40: //下
+			imgs.style.top = imgs.offsetTop + 10+"px";
+		break;
+		case 32: //空格  ---发射子弹
+			var oli = document.createElement("li");
+			oul.appendChild(oli);
+			var left = imgs.offsetLeft + imgs.offsetWidth/2 ;
+			var top = imgs.offsetTop ;
+			run(oli,left,top); //子弹 发射方法
+		break;
+	}
+}
+ 
+ 
+function run(dom,value1,value2){//子弹 发射方法
+	dom.style.left = value1+"px";
+	dom.style.top = value2+"px";
+	setInterval(function(){
+		
+		if(dom.offsetTop-20 >= 0){
+			dom.style.top = dom.offsetTop-20+"px";
+			
+		}else{
+			dom.style.top = 0;
+		}
+		
+		console.log(dom.style.top)
+	},300);
+}
+</script>
+	</body>
+</html>

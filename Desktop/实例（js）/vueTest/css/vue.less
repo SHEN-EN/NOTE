@@ -1,0 +1,59 @@
+#box{
+    font-size: 36px;
+    color: skyblue;
+    .box;
+    .position(420px,0px,0px,0px);
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+#do_list{
+        padding: 5px;
+    li{
+        list-style: none;
+        margin-bottom: 5px;
+        background: skyblue;
+        color: #000000;
+        &:hover{
+            background: cornflowerblue;
+        } 
+    }
+    
+    
+}
+#app{
+    width: 20px;
+    height: 20px;
+    background: whitesmoke;
+}
+.box{
+    background: #e6e6e6;
+}
+#btn{
+    .position(0px,0px,0px,auto);
+    .box;
+    h3{
+        color: skyblue;
+        &:hover{
+            color: cornflowerblue;
+        }
+    }
+}
+.position(@left,@top,@bottom,@right){
+    position: absolute;
+    left: @left;
+    right: @right;
+    bottom: @bottom;
+    top: @top;
+    margin: auto;
+    width: 500px;
+    height: 500px;
+}
+#event{
+    .position(0px,760px,auto,auto);
+    .box;
+}
+.opacity{
+    opacity: .1;
+}

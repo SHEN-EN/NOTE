@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				width: 1000px;
+				height: 1000px;
+				
+			}
+			#box div{
+				float: left;
+				width: 100px;
+				height: 100px;
+				margin: 3px;
+				background: blueviolet;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+		</div>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function  () {
+				var randomNumber=[];//随机1-9数字
+				var strTeam=''
+				for (let i=0;i<100;i++) {
+					 randomNumber.push(parseInt(Math.random()*9))
+				}
+				for (let j=1;j<100;j++) {
+						strTeam+='<div>'+randomNumber[j]+'</div>';
+				}
+				document.getElementById('box').innerHTML=strTeam
+				$('#box').on('click','div',function  () {
+					switch (this.innerText){
+						case '1':
+							break;
+						case '2':
+							break;
+						case '3':
+							break;
+						case '4':
+							break;
+						case '5':
+							break;
+						case '6':
+							break;
+						case '7':
+							break;
+						case '8':
+							break;
+						case '9':
+							break;
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

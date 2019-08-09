@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //两数之和
+var twoSum = function(nums, target) {
+    for(let i=0; i<=nums.length; i++){
+        for(let j=i+1;j<nums.length; j++){
+            if(nums[i]+nums[j]==target){
+                console.log('i'+i)
+                console.log('j'+j)
+            }
+        }
+    }
+};
+nums=[0,1,2,3,3]
+target=5
+twoSum(nums,target);
+//
+nums1=[1,5,2,3,6];
+nums2=[7,4,6,8];
+findMedianSortedArrays(nums1,nums2)
+function findMedianSortedArrays(nums1, nums2) {
+    nums1=nums1.concat(nums2)
+    nums1.sort()
+    console.log(nums1.length%2==0)
+    if (nums1.length%2==0) {//偶数
+        
+    }else{
+
+    }
+};
+</script>
+</body>
+</html>
